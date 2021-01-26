@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>写博客 - 异清轩博客管理系统</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+<link rel="apple-touch-icon-precomposed" href="images/icon/icon.png">
+<link rel="shortcut icon" href="images/icon/favicon.ico">
+
+
+
+<link rel="stylesheet" href="../css/tobar.css"></link>
+<link rel="stylesheet" href="../plugin/layui/css/layui.css"></link>
+
+<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+ 
+</head>
+
+<body class="user-select">
+ <header class="am-topbar" th:replace="header/header::html"></header>
+<section class="container-fluid">
+
+ 
+  <div class="row">
+   
+     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
+      <div class="row">
+        <form class="add-article-form">
+          <div class="col-md-9">
+            <h1 class="page-header">撰写新文章</h1>
+            <div class="form-group">
+              <label for="article-title" class="sr-only">标题</label>
+              <input type="text" id="article-title" name="articleTitle" class="form-control" placeholder="在此处输入标题" required autofocus autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="article-content" class="sr-only">内容</label>
+              <script id="article-content" name="content" type="text/plain"></script>
+            </div>
+        
+          </div>
+          <div class="col-md-3">
+            <h1 class="page-header">操作</h1>
+            
+            <!-- 分类选择开始 -->
+            <div class="add-article-box">
+              <h2 class="add-article-box-title"><span>隶属分类</span></h2>
+              <div class="add-article-box-content">
+                <ul class="category-list">
+            
+                </ul>
+              </div>
+            </div>
+            <!-- 分类选择结束 -->
+            
+              <!-- 标签选择开始 -->
+            <div class="add-article-box">
+              <h2 class="add-article-box-title"><span>标签</span></h2>
+              <div class="add-article-box-content">
+                <input id="tag" type="text" class="form-control" placeholder="输入新标签" name="tags" autocomplete="off">
+                <span class="prompt-text">多个标签请用英文逗号,隔开</span> </div>
+            </div>
+              <!-- 标签选择结束 -->
+            
+              <!-- 图片上传开始 
+            <div class="add-article-box">
+              <h2 class="add-article-box-title"><span>标题图片</span></h2>
+              <div class="add-article-box-content">
+                <input type="text" class="form-control" placeholder="点击按钮选择图片" id="pictureUpload" name="titlepic" autocomplete="off">
+              </div>
+              <div class="add-article-box-footer">
+                <button class="btn btn-default" type="button" ID="upImage">选择</button>
+              </div>
+            </div>
+              图片上传结束 -->
+            
+              <!--发布版块开始 -->
+            <div class="add-article-box">
+            	
+               <!--   <p><label>发布于：</label><span class="article-time-display"><input style="border: none;" type="datetime" name="time" value="2016-01-09 17:29:37" /></span></p>-->
+              </div>
+              <div class="add-article-box-footer" >
+                <button onclick="publishBlog()"  class="btn btn-primary" >发布</button>
+              </div>
+            </div>
+              <!-- 发布版块结束 -->
+              
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript">
+
+function publishBlog(){
+	console.log("rgergg ");
+	var articleContent = $('#article-content').summernote('code');
+	var categoryId = $('input:radio:checked').val();
+	console.log(categoryId)
+	var articleTitle = $('#article-title').val();
+	var tag = $('#tag').val();
+	
+	$.ajax({
+		type : "post",
+		url : "/article/addblog",
+		data:{"articleContent":articleContent,"categoryId":categoryId,"articleTitle":articleTitle},
+		dataType: "json",
+		success : function(data) {
+			alert("ok")
+		}
+          });
+}
+</script>
+
+<script src="../js/writeblog.js"></script>
+<script src="../js/bootstrap.min.js"></script> 
+<script src="../js/admin-scripts.js"></script> 
+<!--summernote富文本编辑器-->
+<link rel="stylesheet" type="text/css" href="/plugin/summernote/summernote.css">
+
+<script src="../plugin/summernote/summernote.js"></script> 
+<script src="/plugin/summernote/lang/summernote-zh-CN.js"></script> 
+
+
+<script type="text/javascript">
+
+$('#article-content').summernote({
+	lang: 'zh-CN',
+	callbacks: {
+		onImageUpload: function(files, editor, welEditable) {
+			editor=$(this);
+			uploadFile(files[0],editor,welEditable); //此处定义了上传文件方法
+		}
+	}
+	
+});
+
+$.ajax({
+	type : "POST",
+	url : "/writeblog/showType",
+	cache : false, //不缓存此页面  
+	dataType: "json",
+	success : function(data) {
+		console.log(data);
+		$(data).each(function(){
+			$(".category-list").append($("<li>"+"<label>"+
+					"<input  name='category' type='radio' value='"+this.categoryId+"'>"+this.categoryName+
+					"</label>"+"</li>"));
+		});
+	}
+});
+
+
+function uploadFile(file,editor,welEditable) {
+	data = new FormData();
+	data.append("file", file);
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: '/uploadBlogImg', //此处配置后端的上传文件，PHP，JSP或者其它
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function(res) {
+			console.log(res);
+			editor.summernote('insertImage', res.data); //完成上传后插入图片到编辑器
+
+		}
+	});
+}
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+<title>峰小子个人博客</title>
+<meta name="keywords" content=""></meta>
+<meta name="description" content=""></meta>
+<link href="../css/base.css" rel="stylesheet"></link>
+<link rel="stylesheet" href="../css/tobar.css"></link>
+<link rel="stylesheet" href="../plugin/layui/css/layui.css"></link>
+<link rel="stylesheet" href="../css/common.css"></link>
+<link href="../css/index.css" rel="stylesheet"></link>
+
+<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../js/sliders.js"></script>
+
+<script type="text/javascript" src="../js/reply.js"></script>
+
+</head>
+<body>
+
+	<!-- 导航头部开始 -->
+	<header class="am-topbar" th:replace="header/header::html"></header>
+	<!-- 导航头部开结束-->
+	
+	<article class="main-content">
+	
+	<input id="articleId" type="hidden" th:value="${article.articleId}">
+		<div class="item-left">
+			<div class="item-list">
+				<div class="article-content-box layui-row">
+					<h1>
+						<th:block th:text="${article.articleTitle}" />
+					</h1>
+					<div class="article-param layui-row">
+						<th:block th:text="${article.pubdate}" />
+						<span><a href="#"><th:block th:text="${article.author}" /></a></span><span>阅读数：<th:block
+								th:text="${article.pageView}" /></span><span>评论数：15</span>&nbsp;&nbsp;
+						<span class="hz-span layui-badge layui-bg-gray">编程语言</span> <span
+							class="hz-span layui-badge layui-bg-gray">编程基础</span> <span
+							class="hz-span layui-badge layui-bg-gray">编程入门</span>
+					</div>
+
+					<article>
+						<div th:utext="${article.articleContent}"></div>
+					</article>
+					<div class="article-author layui-row">
+						作者：<a href="#"><th:block th:text="${article.author}" /></a>
+					</div>
+
+				</div>
+
+
+				<div class="comment-box layui-row"  sec:authorize="! isAuthenticated()">
+					<div class="textarea-box layui-row">
+						<textarea id="commentContent" name="commentContent" readOnly
+							placeholder="请先登录"></textarea>
+					</div>
+					<div class="text-num-tips layui-row">
+						还可以输入<span>500</span>个字
+					</div>
+					<div class="common-btnbox">
+						<button class="layui-btn layui-btn-normal layui-btn-sm"
+							th:onclick="'javascript:alertLoginHip()'">
+							<i class="layui-icon">&#xe642;</i>留言
+						</button>
+						<button class="layui-btn layui-btn-sm globalLoginBtn" onclick="toLogin()">
+							<i class="layui-icon">&#xe66f;</i>登录
+						</button>
+					</div>
+				</div>
+
+				<div class="comment-box layui-row"  sec:authorize="isAuthenticated()">
+					<div class="textarea-box layui-row">
+						<textarea id="commentContent" name="commentContent"
+							placeholder="想对作者说点什么，仅限文本"></textarea>
+							
+							 <span id="uidVal" style="display:none"  sec:authentication="principal.uid"  ></span>
+							 
+					</div>
+					<div class="text-num-tips layui-row">
+						还可以输入<span>500</span>个字
+					</div>
+					<div class="common-btnbox">
+						<button class="layui-btn layui-btn-normal layui-btn-sm"
+							th:onclick="'javascript:addComment(\''+${article.articleId}+'\')'">
+							<i class="layui-icon">&#xe642;</i>留言
+						</button>
+					</div>
+				</div>
+
+
+				<div class="comment-list layui-row">
+					<div id="reply">
+
+
+						<div class="common-box-row layui-row"
+							sec:authorize="isAuthenticated()">
+							<div class="common-headimg layui-col-md1 layui-col-xs2">
+								<div class="commonimg-box">
+									<img src="../img/02.jpg">
+								</div>
+							</div>
+							<textarea style="width: 755px; height: 82px; resize: none;"
+								id="replyContent" name="replyContent"
+								placeholder="回复内容(未回复人即为评论)"></textarea>
+
+							<div class="common-btnbox">
+								<button class="layui-btn layui-btn-normal layui-btn-sm"
+									style="margin-left: 75px"
+									th:onclick="'javascript:sendReply(\' '+${article.articleId}+'\')'">
+									<i class="layui-icon">&#xe642;</i>回复
+								</button>
+							</div>
+						</div>
+
+						<div class="common-box-row layui-row"
+						sec:authorize="! isAuthenticated()">
+							<div class="common-headimg layui-col-md1 layui-col-xs2">
+								<div class="commonimg-box">
+									<img src="../img/02.jpg">
+								</div>
+							</div>
+							<textarea readonly
+								style="width: 755px; height: 82px; resize: none;"
+								id="replyContent" name="replyContent" placeholder="请先登录"></textarea>
+							<div class="common-btnbox">
+								<button class="layui-btn layui-btn-normal layui-btn-sm"
+									style="margin-left: 75px"
+									onclick="toLogin()">
+									<i class="layui-icon">&#xe642;</i>回复
+								</button>
+							</div>
+						</div>
+
+
+
+					</div>
+
+					<ul>
+						<li id="commentli"></li>
+					
+					</ul>
+				</div>
+
+
+			</div>
+		</div>
+
+
+
+		<div class="item-right">
+			<div class="moreSelect" id="lp_right_select">
+				<script>
+					window.onload = function() {
+						var oLi = document.getElementById("tab")
+								.getElementsByTagName("li");
+						var oUl = document.getElementById("ms-main")
+								.getElementsByTagName("div");
+
+						for (var i = 0; i < oLi.length; i++) {
+							oLi[i].index = i;
+							oLi[i].onmouseover = function() {
+								for (var n = 0; n < oLi.length; n++)
+									oLi[n].className = "";
+								this.className = "cur";
+								for (var n = 0; n < oUl.length; n++)
+									oUl[n].style.display = "none";
+								oUl[this.index].style.display = "block"
+							}
+						}
+
+						$.ajax({
+							type : "get",
+							url : "/reply/",
+
+						});
+
+					}
+				</script>
+
+				<div class="ms-top">
+					<ul class="hd" id="tab">
+						<li class="cur"><a href="/">点击排行</a></li>
+						<li><a href="/">最新文章</a></li>
+					</ul>
+				</div>
+				<div class="ms-main" id="ms-main">
+					<div style="display: block;" class="bd bd-news">
+						<ul>
+							<li th:each="article:${pageViewArticle}"><a
+								th:href="@{/detail/detailShow(articleId=${article.articleId})}"
+								target="_blank" th:text="${article.articleTitle}"></a></li>
+						</ul>
+					</div>
+					<div class="bd bd-news">
+						<ul>
+							<li th:each="article:${newList}"><a
+								th:href="@{/detail/detailShow(articleId=${article.articleId})}"
+								target="_blank" th:text="${article.articleTitle}"></a></li>
+
+						</ul>
+					</div>
+				</div>
+				<!--ms-main end -->
+			</div>
+
+			<!--切换卡 moreSelect end -->
+
+			<div class="cloud">
+				<h3>标签云</h3>
+				<ul>
+					<li><a href="/">个人博客</a></li>
+					<li><a href="/">web开发</a></li>
+					<li><a href="/">前端设计</a></li>
+					<li><a href="/">Html</a></li>
+					<li><a href="/">CSS3</a></li>
+					<li><a href="/">Html5+css3</a></li>
+					<li><a href="/">百度</a></li>
+					<li><a href="/">Javasript</a></li>
+					<li><a href="/">web开发</a></li>
+					<li><a href="/">前端设计</a></li>
+					<li><a href="/">Html</a></li>
+					<li><a href="/">CSS3</a></li>
+					<li><a href="/">Html5+css3</a></li>
+					<li><a href="/">百度</a></li>
+					<li><a href="/">生活</a></li>
+					<li><a href="/">项目</a></li>
+					<li><a href="/">态度</a></li>
+
+
+				</ul>
+			</div>
+
+			<div class="tuwen">
+				<h3>图文推荐</h3>
+				<ul>
+					<li><a href="/"><img src="../img/03.jpg"><b>我的老朋友</b></a>
+						<p>
+							<span class="tulanmu"><a href="/">生活情感</a></span><span
+								class="tutime">2019-09-01</span>
+						</p></li>
+					<li><a href="/"><img src="../img/05.jpg"><b>教你怎样用欠费手机拨打电话</b></a>
+						<p>
+							<span class="tulanmu"><a href="/">生活情感</a></span><span
+								class="tutime">2019-09-01</span>
+						</p></li>
+
+				</ul>
+			</div>
+			<div class="ad">
+				<img src="">
+			</div>
+			<div class="links">
+				<h3>
+					<span>[<a href="/">想要友链</a>]
+					</span>友链
+				</h3>
+				<ul>
+					<li><a href="/">个人博客</a></li>
+					<li><a href="/">谷歌</a></li>
+					<li><a href="/">微博</a></li>
+					<li><a href="/">腾讯</a></li>
+					<li><a href="/">百度</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<!--r_box end -->
+	</article>
+	
+	<div th:replace="regist/regist::html"></div>
+
+	<script type="text/javascript">
+		
+	</script>
+	<script src="../js/zepto.min.js"></script>
+	<script src="../js/amazeui.min.js"></script>
+	<script type="text/javascript" src="../js/blog.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+
+
+
+.fr,
+.index .application_download .warp,
+.index .cooperate .col_right1,
+.index .media_reports .col_right1 {
+	float: right
+}
+
+
+
+
+#registModal .modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	width: 400px;
+	border-radius: 0
+}
+
+#registModal .col-left {
+	width: 225px;
+	height: 319px;
+	background: url(../images/back.jpeg) 0 -717px no-repeat
+}
+
+#registModal .col-right {
+	width: 313px;
+	height: 319px;
+	color: #b2b2b2
+}
+
+#registModal .form-group {
+	margin-bottom: 10px
+}
+
+#registModal .modal-body {
+	height: 323px
+}
+
+#registModal #btnRegister {
+	color: #ff9600
+}
+
+#registModal .tips-error {
+	padding: 2px 10px;
+	margin-top: 10px;
+	display: none
+}
+
+#registModal .globalRegist {
+	margin-top:30px;
+	height: 47px;
+	background: #01c26f;
+	color: #fff;
+	font-size: 14px;
+	background: -webkit-linear-gradient(#1fd783, #1fd06b);
+	background: -o-linear-gradient(#1fd783, #1fd06b);
+	background: -moz-linear-gradient(#1fd783, #1fd06b);
+	background: linear-gradient(#1fd783, #1fd06b)
+}
+
+#registModal .threeLogin {
+	position: absolute;
+	left: 30px;
+	bottom: 15px
+}
+
+#registModal .threeLogin span {
+	color: #b3c3c0;
+	float: left;
+	font-size: 14px
+}
+
+#registModal .threeLogin a {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url(../img/icon/login_img.png) no-repeat;
+	vertical-align: middle;
+	margin-left: 15px;
+	cursor: pointer
+}
+
+#registModal  .threeLogin .nqq {
+	background-position: 0 0
+}
+
+#registModal  .threeLogin .nqq:hover {
+	background-position: 0 -20px
+}
+
+#registModal .threeLogin .nwx {
+	background-position: -20px 0
+}
+
+#registModal  .threeLogin .nwx:hover {
+	background-position: -20px -20px
+}
+
+#registModal .threeLogin .nwb {
+	background-position: -40px 0
+}
+
+#registModal .threeLogin .nwb:hover {
+	background-position: -40px -20px
+}
+
+.v5-input-txt {
+	padding: 0 15px 10px
+}
+
+.v5-input-txt .form-control {
+	height: 20px;
+	line-height: normal;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	width: 310px;
+}
+ .code{
+ display:flex;
+  align-items:center;
+  justify-content:center;
+   height:40px;
+   width:70px;
+	background-color:#a6a886;
+	margin-left:5px;
+	font-size:12px;
+	
+}
+
+
+
+.v5-input-txt #id_mobile_code_f,
+.v5-input-txt .send-verify {
+	float: left
+}
+
+.v5-input-txt #id_mobile_code_f {
+	width: 170px;
+	border-radius: 0;
+	margin-right: 24px
+}
+
+.v5-input-txt .send-verify {
+	width: 144px;
+	height: 42px;
+	line-height: 30px;
+	background: #5ecfb5;
+	color: #fff;
+	text-align: center;
+	padding: 0;
+	cursor: pointer;
+	border: 0
+}
+
+.v5-input-txt .btn {
+	padding-bottom: 8px;
+	padding-top: 8px
+}
+
+
+
+.modal-header {
+	color: #5ecfba
+}
+
+.tips-box {
+	width: 100%;
+	display: inline-block;
+	position: relative
+}
+
+.tips {
+	position: absolute;
+	left: 0;
+	top: -40px;
+	color: #fff;
+	font-size: 12px;
+	line-height: 32px;
+	background-color: #ff9600;
+	border-radius: 100px;
+	padding: 0 15px;
+	box-sizing: border-box
+}
+
+.tips:after {
+	content: '';
+	position: absolute;
+	bottom: -12px;
+	left: 25px;
+	border-top: 6px solid #ff9600;
+	border-right: 4px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-left: 4px solid transparent
+}

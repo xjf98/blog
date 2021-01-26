@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.blog.myblog.mapper.AdminMapper">
+
+ <insert id="addCategory" parameterType="com.xiao.blog.myblog.entity.Categories">
+  insert into categories(categoryId,categoryName,otherName,description) values(#{categoryId},#{categoryName},#{otherName},#{description})
+ </insert>
+ 
+ <select id="showCateGories" resultType="com.xiao.blog.myblog.entity.Categories">
+  select categoryId,categoryName,otherName,description from categories
+ </select>
+ 
+ <delete id="deleteCategory" parameterType="string">
+  delete from categories where categoryId= #{categoryId}
+ </delete>
+</mapper>

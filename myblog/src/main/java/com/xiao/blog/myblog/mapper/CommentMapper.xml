@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.blog.myblog.mapper.CommentMapper">
+ <insert id="addComment" parameterType="com.xiao.blog.myblog.entity.Comment">
+  insert into comment(commentId,articleId,answerId,commentDate,commentContent) values(#{commentId},#{articleId},#{answerId},#{commentDate},#{commentContent})
+ </insert>
+ 
+ <select id="getUserAndComment" parameterType="string" resultType="com.xiao.blog.myblog.vo.UserAndComment">
+  select a.username,b.answerId,b.commentId,b.commentDate,b.commentContent from user a inner join comment b on a.uid=b.answerId and b.commentId=#{commentId}
+ </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.blog.myblog.mapper.BlogMapper">
+
+<!-- 根据分类查询文章 -->
+ <select id="selectTypeArticle" parameterType="string"  resultType="com.xiao.blog.myblog.entity.Article">
+  select * from article where categoryId=#{categoryId} 
+ </select>
+ 
+ <select id="showType"  resultType="com.xiao.blog.myblog.entity.Categories">
+  select categoryId,categoryName,otherName,description from categories
+ </select>
+ 
+ <select id="getBlogCountsByType"  parameterType="String" resultType="Integer">
+  select count(articleId) from article where categoryId = #{categoryId}
+ </select>
+ 
+ <select id="getArticeByPageModel"  parameterType="map" resultType="com.xiao.blog.myblog.vo.ArticleAndComment">  
+select a.articleId,a.showImg,a.content,a.articleTitle,a.pubdate,c.categoryName,a.categoryId,a.pageView, count(b.commentId)as commentCount from article a left OUTER JOIN comment b on a.articleId=b.articleId LEFT OUTER JOIN categories c on a.categoryId=c.categoryId where a.categoryId =#{categoryId}  GROUP BY a.articleId ORDER BY a.pubdate desc LIMIT #{currentPage}, #{pageSize};
+ </select>
+ 
+</mapper>

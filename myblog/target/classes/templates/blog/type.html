@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>峰小子个人博客</title>
+<meta name="keywords" content=""></meta>
+<meta name="description" content=""></meta>
+<link href="../css/base.css" rel="stylesheet"></link>
+<link rel="stylesheet" href="../css/tobar.css"></link>
+<link rel="stylesheet" href="../plugin/layui/css/layui.css"></link>
+<link rel="stylesheet" href="../css/common.css"></link>
+<link href="../css/index.css" rel="stylesheet"></link>
+<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../js/sliders.js"></script>
+</head>
+<body>
+
+	<header class="am-topbar" th:replace="header/header::html"></header>
+
+	<article class="main-content">
+	<input type="hidden"  id='categoryId'  th:value="${categoryId}"/>
+		<div class="item-left">
+
+			<div class="item-list">
+				<div class="article-content-box layui-row">
+					<div class="list-param-sort layui-row">
+						排序：<span><a href="#" class="chosen-sort">时间(默认)</a></span><span><a
+							href="#">评论数</a></span><span><a href="#">访问量</a></span>
+					</div>
+					<hr />
+					
+					<div id="blogs"></div>
+				
+					<div class="page-box layui-row">
+						<div id="pageItem"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
+
+
+
+		<div class="item-right">
+			<div class="moreSelect" id="lp_right_select">
+				<div class="ms-top">
+					<ul class="hd" id="tab">
+						<li class="cur"><a href="/">点击排行</a></li>
+						<li><a href="/">最新文章</a></li>
+					</ul>
+				</div>
+				<div class="ms-main" id="ms-main">
+					<div style="display: block;" class="bd bd-news">
+						<ul>
+							<li th:each="article:${pageViewArticle}"><a
+								th:href="@{/todetailShow(articleId=${article.articleId})}"
+								target="_blank" th:text="${article.articleTitle}"></a></li>
+						</ul>
+					</div>
+					<div class="bd bd-news">
+						<ul>
+							<li th:each="article:${selectNewArticles}"><a
+								th:href="@{/detail/detailShow(articleId=${article.articleId})}"
+								target="_blank" th:text="${article.articleTitle}"></a></li>
+
+						</ul>
+					</div>
+				</div>
+				<!--ms-main end -->
+			</div>
+
+			<!--切换卡 moreSelect end -->
+
+			<div class="cloud">
+				<h3>标签云</h3>
+				<ul>
+					<li><a href="/">个人博客</a></li>
+					<li><a href="/">web开发</a></li>
+					<li><a href="/">前端设计</a></li>
+					<li><a href="/">Html</a></li>
+					<li><a href="/">CSS3</a></li>
+					<li><a href="/">Html5+css3</a></li>
+					<li><a href="/">百度</a></li>
+					<li><a href="/">Javasript</a></li>
+					<li><a href="/">web开发</a></li>
+					<li><a href="/">前端设计</a></li>
+					<li><a href="/">Html</a></li>
+					<li><a href="/">CSS3</a></li>
+					<li><a href="/">Html5+css3</a></li>
+					<li><a href="/">百度</a></li>
+					<li><a href="/">生活</a></li>
+					<li><a href="/">项目</a></li>
+					<li><a href="/">态度</a></li>
+
+
+				</ul>
+			</div>
+
+			<div class="tuwen">
+				<h3>图文推荐</h3>
+				<ul>
+					<li><a href="/"><img src="../img/03.jpg"><b>我的老朋友</b></a>
+						<p>
+							<span class="tulanmu"><a href="/">生活情感</a></span><span
+								class="tutime">2019-09-01</span>
+						</p></li>
+					<li><a href="/"><img src="../img/05.jpg"><b>教你怎样用欠费手机拨打电话</b></a>
+						<p>
+							<span class="tulanmu"><a href="/">生活情感</a></span><span
+								class="tutime">2019-09-01</span>
+						</p></li>
+
+				</ul>
+			</div>
+			<div class="ad">
+				<img src="">
+			</div>
+			<div class="links">
+				<h3>
+					<span>[<a href="/">想要友链</a>]
+					</span>友链
+				</h3>
+				<ul>
+					<li><a href="/">个人博客</a></li>
+					<li><a href="/">谷歌</a></li>
+					<li><a href="/">微博</a></li>
+					<li><a href="/">腾讯</a></li>
+					<li><a href="/">百度</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<!--r_box end -->
+	</article>
+	
+	<div th:replace="regist/regist::html"></div>
+				
+				
+	<script src="../plugin/layui/layui.js"></script>
+	<script src="../js/type.js"></script>
+	<script src="../js/zepto.min.js"></script>
+	<script src="../js/amazeui.min.js"></script>
+</body>
+
+</html>

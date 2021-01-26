@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.blog.myblog.mapper.ArticleMapper">
+
+<select id="selectNewArticles" resultType="com.xiao.blog.myblog.vo.ArticleAndComment">
+    select a.articleId,a.showImg,a.content,a.articleTitle,a.pubdate,a.categoryId,a.pageView,c.categoryName, count(b.commentId)as commentCount from article a left OUTER JOIN comment b on a.articleId=b.articleId LEFT OUTER JOIN categories c on a.categoryId=c.categoryId GROUP BY a.articleId ORDER BY a.pubdate desc LIMIT 6;
+</select>
+
+<select id="selectAllCategory" resultType="com.xiao.blog.myblog.entity.Categories">
+    select categoryId,categoryName,otherName from categories
+</select>
+
+<select id="selectArticleByCategoryId" parameterType="string" resultType="com.xiao.blog.myblog.entity.Article">
+    select * from article where categoryId=#{categoryId} limit 9
+</select>
+
+<select id="getPageViewArticle" resultType="com.xiao.blog.myblog.entity.Article">
+    select articleId,articleTitle from article order by pageView desc limit 6
+</select>
+</mapper>
+

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"></meta>
+<title>峰唉个人博客</title>
+<link href="../css/base.css" rel="stylesheet"></link>
+<link rel="stylesheet" href="../css/tobar.css"></link>
+<link rel="stylesheet" href="../plugin/layui/css/layui.css"></link>
+<link rel="stylesheet" href="../css/common.css"></link>
+<link href="../css/index.css" rel="stylesheet"></link>
+<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../js/sliders.js"></script>
+<script type="text/javascript" src="../js/skip-logic.js"></script>
+</head>
+<body>
+
+	<header class="am-topbar" th:replace="header/header::html"></header>
+
+	<article class="main-content">
+		<div class="item-left">
+		
+		<!-- 导播图开始 -->
+			<div class="banner">
+				<div>
+					<div id="slide-runner">
+						<a href="/" target="_blank"><img id="slide-img-1"
+							src="../img/bg.jpg" alt="" /></a> 
+						<div id="slide-controls">
+						</div>
+					</div>
+				</div>
+			</div>
+				<!-- 导播图结束-->
+				
+			<!-- 推荐文章开始-->
+			<div class="topnews">
+				<h2>
+				<b>文章</b>推荐
+				</h2>
+				<div class="blogs" th:each="newList:${newList}">
+					<figure>
+						<a  th:onclick="'javascript:todetail(\''+${newList.articleId}+'\')'" ><img th:src="${newList.showImg}"></img></a>
+					</figure>
+					<ul>
+						<!-- 标题 -->
+						<h3>
+							<a th:href="@{/todetailShow(articleId=${newList.articleId})}" target="_blank" th:text="${newList.articleTitle}"></a>
+						</h3>
+						<!-- 内容 -->
+						<p class="layui-elip" th:utext="${newList.content}"></p>
+						<p class="autor">
+							<!-- 隶属分类 -->
+							<span class="lm f_l"><a href="/"
+								th:text="${newList.categoryName}"></a></span> <span class="dtime f_l"
+								th:text="${newList.pubdate}">2019-09-01</span><span
+								class="viewnum f_r">浏览（<a href="/"
+								th:text="${newList.pageView}"></a>）
+							</span><span class="pingl f_r">评论（<a href="/"  th:text="${newList.commentCount}"></a>）
+							</span>
+						</p>
+					</ul>
+				</div>
+
+			
+			</div>
+			<!-- 推荐文章结束-->
+			
+			<!-- 分类模块版开始 -->
+			<div class="type-module layui-row layui-col-space30">
+			
+				<div class="layui-col-md6  listContent" th:each="categoryAndArticle:${selectCategoryAndArticle}">
+					<div class="type-module-item layui-row">
+						<div class="item-title-row layui-row row-align">
+							<div class="layui-col-md10 row-align font-size2">
+								<div class="left-icon"></div>
+								<span class="font-bold" th:text="${categoryAndArticle.categoryName}"></span>
+							</div>
+							<div
+								class="layui-col-md2 text-align-right  only-pointer font-size1 font-color3">
+								<a th:href="@{/blog/showTypeArticle(categoryId=${categoryAndArticle.categoryId})}">更多</a>
+							</div>
+						</div>
+						<div class="item-ul-row layui-row">
+							<ul>
+								<li th:each="articles:${categoryAndArticle.articles}">
+									<div class="ul-li-div layui-row row-align">
+										<div class="layui-col-md9 layui-elip font-size2">
+											&gt; &nbsp;<a th:text="${articles.articleTitle}" th:href="@{/todetailShow(articleId=${articles.articleId})}"></a>
+										</div>
+										
+								</li>
+							
+							</ul>
+						</div>
+					</div>
+				</div>
+				</div>
+				<!-- 分类模块版结束 -->
+				
+			</div>
+
+
+		<div class="item-right">
+
+   <!-- 个人名片开始 -->
+			<div class=" layui-row pane-bg-radius">
+				<div class="visit-img-box top-radius">
+					<img src="../img/01.jpg" class="top-radius" />
+				</div>
+				<div class="headimg-box">
+					<img src="../img/myback.jpg" />
+				</div>
+				<div class="nickname layui-row row-align text-align-center">
+					峰唉 <span><img src="../img/icon/man.png" height="32"
+						width="32" /></span>
+				</div>
+				<div class="padding-hr layui-row common-padding-x">
+					<div class="hr-line-div"></div>
+				</div>
+				<div
+					class="mine-msg layui-row common-padding font-size1 font-color5">
+					<div class="layui-row row-align">
+						<div class="msg-name layui-col-md3">Q Q ：</div>
+						<div class="msg-val layui-col-md9">1234567892</div>
+					</div>
+					<div class="layui-row row-align">
+						<div class="msg-name layui-col-md3">职业 ：</div>
+						<div class="msg-val layui-col-md9">猿类</div>
+					</div>
+					<div class="layui-row row-align">
+						<div class="msg-name layui-col-md3">现居 ：</div>
+						<div class="msg-val layui-col-md9">陕西省-西安市</div>
+					</div>
+					<div class="layui-row row-align">
+						<div class="msg-name layui-col-md3">Email ：</div>
+						<div class="msg-val layui-col-md9">1234566789@qq.com</div>
+					</div>
+
+				</div>
+
+			</div>
+		<!-- 个人名片结束 -->
+		
+			<!-- 切换卡模块开始 -->
+			<div class="ad300x100">
+				<img src=""></img>
+			</div>
+			<div class="moreSelect" id="lp_right_select">
+			
+				<div class="ms-top">
+					<ul class="hd" id="tab">
+						<li class="cur"><a href="/">点击排行</a></li>
+						<li><a href="/">最新文章</a></li>
+					</ul>
+				</div>
+				<div class="ms-main" id="ms-main">
+					<div style="display: block;" class="bd bd-news">
+						<ul>
+							<li th:each="article:${pageViewArticle}"><a th:href="@{/todetailShow(articleId=${article.articleId})}" target="_blank" th:text="${article.articleTitle}"></a></li>
+						</ul>
+					</div>
+					<div class="bd bd-news">
+						<ul>
+								<li th:each="article:${newList}"><a th:href="@{/todetailShow(articleId=${article.articleId})}" target="_blank" th:text="${article.articleTitle}"></a></li>
+						</ul>
+					</div>
+				</div>
+				<!--ms-main end -->
+			</div>
+			<!-- 切换卡模块结束 -->
+			
+			
+	<!-- 标签云开始 -->
+			<div class="cloud">
+				<h3>我的标签 <a href="#" th:text="更多"></a></h3>
+				<ul>
+					<li><a href="/">个人博客</a></li>
+					<li><a href="/">web开发</a></li>
+					<li><a href="/">前端设计</a></li>
+					<li><a href="/">百度</a></li>
+					<li><a href="/">Javasript</a></li>
+					<li><a href="/">web开发</a></li>
+					<li><a href="/">前端设计</a></li>
+					<li><a href="/">Html5+css3</a></li>
+					<li><a href="/">生活</a></li>
+					<li><a href="/">项目</a></li>
+					<li><a href="/">态度</a></li>
+				</ul>
+			</div>
+	<!-- 标签云结束-->
+
+	<!-- 图文推荐开始 
+			<div class="tuwen">
+				<h3>图文推荐<a href="#"  th:text="更多"></a></h3>
+				<ul>
+					<li><a href="/"><img src="../img/03.jpg"></img><b>我的老朋友</b></a>
+						<p>
+							<span class="tulanmu"><a href="/">生活情感</a></span><span
+								class="tutime">2019-09-01</span>
+						</p></li>
+					<li><a href="/"><img src="../img/05.jpg"></img><b>教你怎样用欠费手机拨打电话</b></a>
+						<p>
+							<span class="tulanmu"><a href="/">生活情感</a></span><span
+								class="tutime">2019-09-01</span>
+						</p></li>
+
+				</ul>
+			</div>
+ 图文推荐结束 -->		
+	
+			<div class="ad">
+				<img src=""></img>
+			</div>
+			<div class="links">
+				<h3>
+					<span>[<a href="/">想要友链</a>]
+					</span>友链
+				</h3>
+				<ul>
+					<li><a href="http://baidu.com">个人博客</a></li>
+					<li><a href="/">谷歌</a></li>
+					<li><a href="/">微博</a></li>
+					<li><a href="/">腾讯</a></li>
+					<li><a href="/">百度</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<!--r_box end -->
+	</article>
+
+
+
+<div th:replace="regist/regist::html"></div>
+
+	<script src="../js/myindex.js"></script>
+	<script src="../js/zepto.min.js"></script>
+	<script src="../js/amazeui.min.js"></script>
+</body>
+
+</html>

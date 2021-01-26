@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.blog.myblog.mapper.ReplyMapper">
+
+<insert id="writeReply"  parameterType="com.xiao.blog.myblog.entity.Reply">
+  insert into reply(replyerId,commentId,replyContentId,replyDate,replyContent,answerId,answerName) values(#{replyerId},#{commentId},#{replyContentId},#{replyDate},#{replyContent},#{answerId},#{answerName})
+</insert>
+
+<select id="getReplyById"  parameterType="string" resultType="com.xiao.blog.myblog.vo.ReplyViewModel">
+  select a.replyerId,a.commentId,a.replyContentId,a.replyDate,a.replyContent,a.answerId,a.answerName,b.username,b.headImgUrl from reply a LEFT OUTER JOIN user b on a.replyerId = b.uid where replyContentId=#{replyContentId}
+ </select>
+ 
+ <select id="getAllReplyByCommentId"  parameterType="string" resultType="com.xiao.blog.myblog.vo.ReplyViewModel">
+  select  a.replyerId,a.commentId,a.replyContentId,a.replyDate,a.replyContent,a.answerId,a.answerName,b.username,b.headImgUrl from reply a left join user b on a.replyerId = b.uid where a.commentId = #{commentId}
+ </select>
+ 
+</mapper>

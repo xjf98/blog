@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.blog.myblog.mapper.ArticleDetailMapper">
+
+<select id="articleDetailShow" parameterType="string" resultType="com.xiao.blog.myblog.entity.Article">
+ select * from article where articleId=#{articleId}
+</select>
+
+<update id="addHitByArticleId" parameterType="string">
+ update article set pageView=pageView+1 where articleId=#{articleId}
+</update>
+
+<select id="getAllCommentByArticleId" parameterType="string" resultType="com.xiao.blog.myblog.vo.UserAndComment">
+ select a.username,b.answerId,b.commentId,b.commentDate,b.commentContent from user a inner join comment b on a.uid=b.answerId and b.articleId=#{articleId} order by b.commentDate desc
+</select>
+</mapper>

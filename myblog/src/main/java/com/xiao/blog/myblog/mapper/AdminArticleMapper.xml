@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.blog.myblog.mapper.AdminArticleMapper">
+
+  <select id="getAllArticleCount" resultType="int">
+    select count(articleId) from article
+  </select>
+  
+  
+  <select id="getAllArticleByPage"  parameterType="map"  resultType="com.xiao.blog.myblog.vo.AdminBlogViewModel">
+     SELECT a.articleId,a.pubdate,a.articleTitle,b.categoryName,c.username
+     FROM article AS t1 LEFT JOIN categories AS t2 on t1.categoryId = t2.categoryId
+     LEFT JOIN user AS t3 on t1.authId = t3.uid
+     ORDER BY t1.pubdate DESC LIMIT #{currentPage}, #{pageSize};
+  </select>
+  
+</mapper>
